@@ -97,7 +97,10 @@ public class Consultes {
         }
     }
     
-    
+    /**
+     * Metodo para modificar el precio.
+     * Quita el simbolo $ de los precios de todas las plantas.
+     */
     public void modificarPreu(){
         try{
             xqe = con.createExpression();
