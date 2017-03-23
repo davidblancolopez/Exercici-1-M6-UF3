@@ -162,4 +162,21 @@ public class Consultes {
         }
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public void traduirElement(){
+        try{
+            xqe = con.createExpression();
+            String xq = "update rename doc('/Exercici-1-M6-UF3/plantes.xml')//libro/telefono as 'telefonos'";
+        }catch(XQException ex){
+            
+        }
+    }
 }
