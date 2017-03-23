@@ -22,91 +22,6 @@ public class Consultes {
     }
 
     /**
-     * Metodo para obtener todas las plantas.
-     * @return 
-     */
-    public List<Node> obtenirPlantes() {
-        List<Node> plantes = new ArrayList<>();
-        try {
-            xqe = con.createExpression();
-            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//planta return $b/COMMON";
-
-            XQResultSequence rs = xqe.executeQuery(xq);
-            while (rs.next()) {
-                plantes.add(rs.getItem().getNode());
-            }
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return plantes;
-    }
-
-    /**
-     * Cercar planta per el nom comú.
-     * @param nom
-     * @return 
-     */
-    public Node cercarNom(String nom) {
-        Node planta = null;
-        try {
-            xqe = con.createExpression();
-            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
-                    + "//planta where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
-
-            XQResultSequence rs = xqe.executeQuery(xq);
-            rs.next();
-            planta = rs.getItem().getNode();
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return planta;
-    }
-
-    /**
-     * Metodo para añadir una planta.
-     * @param common
-     * @param botanical
-     * @param zone
-     * @param light
-     * @param price
-     * @param availability 
-     */
-    public void afegirPlanta(String common, String botanical, String zone, String light, double price, int availability) {
-        try {
-            xqe = con.createExpression();
-            String xq = "update insert "
-                    + "    <PLANT>"
-                    +          "<COMMON>" + common + "</COMMON>"
-                    + "        <BOTANICAL>" + botanical + "</BOTANICAL>"
-                    + "        <ZONE>" + zone + "</ZONE>"
-                    + "        <LIGHT>" + light + "</LIGHT>"
-                    + "        <PRICE>" + price + "</PRICE>"
-                    + "        <AVAILABILITY>" + availability + "</AVAILABILITY>"
-                    + "    </PLANT>\n"
-                    + "into doc('/Exercici-1-M6-UF3/plantes.xml";
-
-            xqe.executeCommand(xq);
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    /**
-     * 
-     * @param atributo
-     * @param valor 
-     */
-    public void afegirAtribut(String atributo, String valor) {
-        try {
-            xqe = con.createExpression();
-            String xq = "update insert attribute " + atributo + " {'" + valor + "'} into doc('/Exercici-1-M6-UF3/plantes.xml')//planta";
-            xqe.executeCommand(xq);
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    /**
      * 
      * @param etiqueta
      * @param valor 
@@ -170,13 +85,121 @@ public class Consultes {
     
     
     
-    
+    /**
+     * Metodo para traducir una etiqueta a otro idioma.
+     */
     public void traduirElement(){
         try{
             xqe = con.createExpression();
-            String xq = "update rename doc('/Exercici-1-M6-UF3/plantes.xml')//libro/telefono as 'telefonos'";
+            String xq = "update rename doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT/COMMON as 'COMUN'";
         }catch(XQException ex){
-            
+            System.out.println(ex.getMessage());
         }
     }
+    
+    
+    public void modificarPreu(){
+        try{
+            xqe = con.createExpression();
+            
+//            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
+//                    + "//planta where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
+            
+            
+        }catch(XQException ex){
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    /**
+     * Metodo para obtener todas las plantas.
+     * @return 
+     */
+    public List<Node> obtenirPlantes() {
+        List<Node> plantes = new ArrayList<>();
+        try {
+            xqe = con.createExpression();
+            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//return $b";
+
+            XQResultSequence rs = xqe.executeQuery(xq);
+            while (rs.next()) {
+                plantes.add(rs.getItem().getNode());
+            }
+        } catch (XQException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return plantes;
+    }
+    
+    
+    /**
+     * Cercar planta per el nom comú.
+     * @param nom
+     * @return 
+     */
+    public Node cercarNom(String nom) {
+        Node planta = null;
+        try {
+            xqe = con.createExpression();
+            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
+                    + "//planta where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
+
+            XQResultSequence rs = xqe.executeQuery(xq);
+            rs.next();
+            planta = rs.getItem().getNode();
+        } catch (XQException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return planta;
+    }
+    
+    
+    /**
+     * Metodo para añadir una planta.
+     * @param common
+     * @param botanical
+     * @param zone
+     * @param light
+     * @param price
+     * @param availability 
+     */
+    public void afegirPlanta(String common, String botanical, String zone, String light, double price, int availability) {
+        try {
+            xqe = con.createExpression();
+            String xq = "update insert "
+                    + "    <PLANT>"
+                    +          "<COMMON>" + common + "</COMMON>"
+                    + "        <BOTANICAL>" + botanical + "</BOTANICAL>"
+                    + "        <ZONE>" + zone + "</ZONE>"
+                    + "        <LIGHT>" + light + "</LIGHT>"
+                    + "        <PRICE>" + price + "</PRICE>"
+                    + "        <AVAILABILITY>" + availability + "</AVAILABILITY>"
+                    + "    </PLANT>\n"
+                    + "into doc('/Exercici-1-M6-UF3/plantes.xml";
+
+            xqe.executeCommand(xq);
+        } catch (XQException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    /**
+     * 
+     * @param atributo
+     * @param valor 
+     */
+    public void afegirAtribut(String atributo, String valor) {
+        try {
+            xqe = con.createExpression();
+            String xq = "update insert attribute " + atributo + " {'" + valor + "'} into doc('/Exercici-1-M6-UF3/plantes.xml')//planta";
+            xqe.executeCommand(xq);
+        } catch (XQException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+    
+    
 }
