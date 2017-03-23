@@ -58,7 +58,7 @@ public class Exercici_1_M6_UF3 {
 //        cs.eliminarEtiqueta(etiqueta);
 //        cs.eliminarAtribut(atributo);
         cs.eliminarLlibre(codigo);
-        imprimirLibros(cs.obtenirLlibres());
+        imprimirLibros(cs.obtenirPlantes());
 
     }
 

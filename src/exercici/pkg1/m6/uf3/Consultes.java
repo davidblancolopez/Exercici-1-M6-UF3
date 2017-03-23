@@ -21,27 +21,28 @@ public class Consultes {
         this.con = con;
     }
 
-    public List<Node> obtenirLlibres() {
-        List<Node> libros = new ArrayList<>();
+    public List<Node> obtenirPlantes() {
+        List<Node> plantes = new ArrayList<>();
         try {
             xqe = con.createExpression();
-            String xq = "for $b in doc ('/m06uf3/libros.xml')//libro return $b/titulo";
+            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//planta return $b/titulo";
 
             XQResultSequence rs = xqe.executeQuery(xq);
             while (rs.next()) {
-                libros.add(rs.getItem().getNode());
+                plantes.add(rs.getItem().getNode());
             }
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
         }
-        return libros;
+        return plantes;
     }
 
+    
     public Node cercarNom(String nom) {
         Node libro = null;
         try {
             xqe = con.createExpression();
-            String xq = "for $b in doc('/m06uf3/libros.xml')"
+            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//libro where every $a in $b/titulo satisfies ($a = '" + nom + "') return $b";
 
             XQResultSequence rs = xqe.executeQuery(xq);
@@ -53,17 +54,19 @@ public class Consultes {
         return libro;
     }
 
-    public void afegirLlibre(String codigo, String categoria, String fecha_pub, String titulo, String ventas) {
+    public void afegirPlanta(String common, String botanical, String zone, String light, double price, int availability) {
         try {
             xqe = con.createExpression();
             String xq = "update insert "
-                    + "    <libro codigo='" + codigo + "'>"
-                    + "        <categoria>" + categoria + "</categoria>"
-                    + "        <fecha_pub>" + fecha_pub + "</fecha_pub>"
-                    + "        <titulo>" + titulo + "</titulo>"
-                    + "        <ventas>" + ventas + "</ventas>"
-                    + "    </libro>\n"
-                    + "into doc('/m06uf3/libros.xml')/listadelibros";
+                    + "    <PLANT>"
+                    +          "<COMMON>" + common + "</COMMON>"
+                    + "        <BOTANICAL>" + botanical + "</BOTANICAL>"
+                    + "        <ZONE>" + zone + "</ZONE>"
+                    + "        <LIGHT>" + light + "</LIGHT>"
+                    + "        <PRICE>" + price + "</PRICE>"
+                    + "        <AVAILABILITY>" + availability + "</AVAILABILITY>"
+                    + "    </PLANT>\n"
+                    + "into doc('/Exercici-1-M6-UF3/plantes.xml";
 
             xqe.executeCommand(xq);
         } catch (XQException ex) {
