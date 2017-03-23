@@ -21,11 +21,15 @@ public class Consultes {
         this.con = con;
     }
 
+    /**
+     * Metodo para obtener todas las plantas.
+     * @return 
+     */
     public List<Node> obtenirPlantes() {
         List<Node> plantes = new ArrayList<>();
         try {
             xqe = con.createExpression();
-            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//planta return $b/titulo";
+            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//planta return $b/COMMON";
 
             XQResultSequence rs = xqe.executeQuery(xq);
             while (rs.next()) {
@@ -37,23 +41,36 @@ public class Consultes {
         return plantes;
     }
 
-    
+    /**
+     * Cercar planta per el nom comú.
+     * @param nom
+     * @return 
+     */
     public Node cercarNom(String nom) {
-        Node libro = null;
+        Node planta = null;
         try {
             xqe = con.createExpression();
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
-                    + "//libro where every $a in $b/titulo satisfies ($a = '" + nom + "') return $b";
+                    + "//planta where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
 
             XQResultSequence rs = xqe.executeQuery(xq);
             rs.next();
-            libro = rs.getItem().getNode();
+            planta = rs.getItem().getNode();
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
         }
-        return libro;
+        return planta;
     }
 
+    /**
+     * Metodo para añadir una planta.
+     * @param common
+     * @param botanical
+     * @param zone
+     * @param light
+     * @param price
+     * @param availability 
+     */
     public void afegirPlanta(String common, String botanical, String zone, String light, double price, int availability) {
         try {
             xqe = con.createExpression();
@@ -74,20 +91,30 @@ public class Consultes {
         }
     }
 
+    /**
+     * 
+     * @param atributo
+     * @param valor 
+     */
     public void afegirAtribut(String atributo, String valor) {
         try {
             xqe = con.createExpression();
-            String xq = "update insert attribute " + atributo + " {'" + valor + "'} into doc('/m06uf3/libros.xml')//libro";
+            String xq = "update insert attribute " + atributo + " {'" + valor + "'} into doc('/Exercici-1-M6-UF3/plantes.xml')//planta";
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
+    /**
+     * 
+     * @param etiqueta
+     * @param valor 
+     */
     public void afegirEtiqueta(String etiqueta, String valor) {
         try {
             xqe = con.createExpression();
-            String xq = "update insert <" + etiqueta + ">'" + valor + "'</" + etiqueta + "> into doc('/m06uf3/libros.xml')//libro";
+            String xq = "update insert <" + etiqueta + ">'" + valor + "'</" + etiqueta + "> into doc('/Exercici-1-M6-UF3/plantes.xml')//libro";
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
