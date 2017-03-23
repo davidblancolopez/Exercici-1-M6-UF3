@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package exercici.pkg1.m6.uf3;
 
 import java.util.List;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-/**
- *
- * @author ALUMNEDAM
- */
+
 public class Exercici_1_M6_UF3 {
 
     public static void imprimirLibros(List<Node> ns) {

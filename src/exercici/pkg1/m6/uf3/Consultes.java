@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package exercici.pkg1.m6.uf3;
 
 import java.util.ArrayList;
@@ -14,10 +10,7 @@ import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import org.w3c.dom.Node;
 
-/**
- *
- * @author ALUMNEDAM
- */
+
 public class Consultes {
 
     private final XQConnection con;
