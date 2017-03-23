@@ -102,8 +102,9 @@ public class Consultes {
         try{
             xqe = con.createExpression();
             
-//            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
-//                    + "//planta where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
+            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
+                    + "//CATALOG/PLANT/PRICE where starts-with($b, '$')"
+                    +"return update value $b with substring($b, 2)";
             
             
         }catch(XQException ex){
