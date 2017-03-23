@@ -1,0 +1,26 @@
+<listadelibros>
+	<libro codigo="16-078">
+		<categoria>scripting</categoria>
+		<categoria>bash</categoria>
+		<categoria>linux</categoria>
+		<fecha_pub>2015-04-21</fecha_pub>
+		<titulo>instant javascript</titulo>
+		<ventas>375298</ventas>
+	</libro>
+	<libro codigo="16-005">
+		<categoria>asp</categoria>
+		<categoria>programacion</categoria>
+		<fecha_pub>2013-05-10</fecha_pub>
+		<titulo>instant active server pages</titulo>
+		<ventas>297311</ventas>
+	</libro>
+	<libro codigo="16-041">
+		<categoria>html</categoria>
+		<categoria>w3c</categoria>
+		<categoria>web</categoria>
+		<categoria>etiquetas</categoria>		
+		<fecha_pub>2014-03-07</fecha_pub>
+		<titulo>instant html</titulo>
+		<ventas>127853</ventas>
+	</libro>
+</listadelibros>
