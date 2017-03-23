@@ -104,7 +104,7 @@ public class Consultes {
             
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//CATALOG/PLANT/PRICE where starts-with($b, '$')"
-                    +"return update value $b with substring($b, 2)";
+                    + "return update value $b with substring($b, 2)";
             
             
         }catch(XQException ex){
