@@ -147,7 +147,7 @@ public class Consultes {
         try {
             xqe = con.createExpression();
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
-                    + "//planta where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
+                    + "//PLANT where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
 
             XQResultSequence rs = xqe.executeQuery(xq);
             rs.next();
@@ -180,7 +180,7 @@ public class Consultes {
                     + "        <PRICE>" + price + "</PRICE>"
                     + "        <AVAILABILITY>" + availability + "</AVAILABILITY>"
                     + "    </PLANT>\n"
-                    + "into doc('/Exercici-1-M6-UF3/plantes.xml";
+                    + "following doc('/Exercici-1-M6-UF3/plantes.xml";
 
             xqe.executeCommand(xq);
         } catch (XQException ex) {
