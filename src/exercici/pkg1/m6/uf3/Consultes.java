@@ -196,6 +196,31 @@ public class Consultes {
     }
     
     
+    public void cercarPerRangPreus(double preuMinim, double preuMaxim){
+        try{
+            xqe = con.createExpression();
+            String xq;
+            xqe.executeCommand(xq);
+        }catch(XQException ex){
+            System.out.println(ex);
+        }
+    }
+    
+    /**
+     * Metode per cercar plantes per zona.
+     * @param zona 
+     */
+    public void cercarPerZona(String zona){
+        try{
+            xqe = con.createExpression();
+            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
+                    + "//PLANT where every $a in $b/COMMON/ZONE satisfies ($a = '" + zona + "') return $b";
+            xqe.executeCommand(xq);
+        }catch(XQException ex){
+            System.out.println(ex);
+        }
+    }
+    
     /**
      * Metode per afegir un node.
      */
