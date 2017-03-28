@@ -210,6 +210,18 @@ public class Consultes {
     }
     
     
+    public void modificarPreuPlanta(String nom, double preu) {
+
+        try {
+            xqe = con.createExpression();
+            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
+                    + "//PLANT where every $a in $b/COMMON satisfies ($a = '" + nom + "') ";
+            xqe.executeCommand(xq);
+        } catch (XQException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     /**
      * Metode per eliminar una planta.
      * @param nom 
