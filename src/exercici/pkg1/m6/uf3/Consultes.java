@@ -46,16 +46,7 @@ public class Consultes {
         }
     }
 
-    public void eliminarLlibre(String codigo) {
 
-        try {
-            xqe = con.createExpression();
-            String xq = "update delete doc('/m06uf3/libros.xml')//libro[@codigo='" + codigo + "']";
-            xqe.executeCommand(xq);
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
 
     public void eliminarEtiqueta(String etiqueta) {
         try {
@@ -173,7 +164,7 @@ public class Consultes {
             xqe = con.createExpression();
             String xq = "update insert "
                     + "    <PLANT>"
-                    +          "<COMMON>" + common + "</COMMON>"
+                    + "        <COMMON>" + common + "</COMMON>"
                     + "        <BOTANICAL>" + botanical + "</BOTANICAL>"
                     + "        <ZONE>" + zone + "</ZONE>"
                     + "        <LIGHT>" + light + "</LIGHT>"
@@ -190,14 +181,14 @@ public class Consultes {
     
     
     /**
-     * 
+     * Metodo para añadir un atributo a las plantas.
      * @param atributo
      * @param valor 
      */
     public void afegirAtribut(String atributo, String valor) {
         try {
             xqe = con.createExpression();
-            String xq = "update insert attribute " + atributo + " {'" + valor + "'} into doc('/Exercici-1-M6-UF3/plantes.xml')//planta";
+            String xq = "update insert attribute " + atributo + " {'" + valor + "'} into doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT";
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
@@ -205,5 +196,32 @@ public class Consultes {
     }
     
     
+    /**
+     * Metode per afegir un node.
+     */
+    public void afegirNode(){
+        try{
+            xqe = con.createExpression();
+            String xq;
+            xqe.executeCommand(xq);
+        }catch(XQException ex){
+            System.out.println(ex);
+        }
+    }
     
+    
+    /**
+     * Metode per eliminar una planta.
+     * @param nom 
+     */
+    public void eliminarPlanta(String nom) {
+
+        try {
+            xqe = con.createExpression();
+            String xq = "update delete doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT//COMMON = " + nom + "']";
+            xqe.executeCommand(xq);
+        } catch (XQException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }
