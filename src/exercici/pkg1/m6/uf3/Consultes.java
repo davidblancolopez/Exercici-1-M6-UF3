@@ -1,4 +1,3 @@
-
 package exercici.pkg1.m6.uf3;
 
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import javax.xml.xquery.XQExpression;
 import javax.xml.xquery.XQPreparedExpression;
 import javax.xml.xquery.XQResultSequence;
 import org.w3c.dom.Node;
-
 
 public class Consultes {
 
@@ -22,100 +20,48 @@ public class Consultes {
     }
 
     /**
-     * 
-     * @param etiqueta
-     * @param valor 
-     */
-    public void afegirEtiqueta(String etiqueta, String valor) {
-        try {
-            xqe = con.createExpression();
-            String xq = "update insert <" + etiqueta + ">'" + valor + "'</" + etiqueta + "> into doc('/Exercici-1-M6-UF3/plantes.xml')//libro";
-            xqe.executeCommand(xq);
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public void modificarPreuNode(String codigo, String precio) {
-        try {
-            xqe = con.createExpression();
-            String xq = "update value doc('/m06uf3/libros.xml')//libro[@codigo='" + codigo + "']/preu with '" + precio + "'";
-            xqe.executeCommand(xq);
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-
-
-    public void eliminarEtiqueta(String etiqueta) {
-        try {
-            xqe = con.createExpression();
-            String xq = "update delete doc('/m06uf3/libros.xml')//libro/" + etiqueta;
-            xqe.executeCommand(xq);
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    void eliminarAtribut(String atributo) {
-        try {
-            xqe = con.createExpression();
-            String xq = "update delete doc('/m06uf3/libros.xml')//libro/@" + atributo;
-            xqe.executeCommand(xq);
-        } catch (XQException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    /**
      * Metodo para traducir una etiqueta a otro idioma.
      */
-    public void traduirElement(){
-        try{
+    public void traduirElement(String[] abans, String[] despres) {
+        try {
             xqe = con.createExpression();
-            String xq = "update rename doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT/COMMON as 'COMUN'";
-        }catch(XQException ex){
+            for (int i = 0; i < 10; i++) {
+                String xq = "update rename doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT/" + abans[i] + "as'" + despres[i] + "'";
+                xqe.executeCommand(xq);
+            }
+        } catch (XQException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
-     * Metodo para modificar el precio.
-     * Quita el simbolo $ de los precios de todas las plantas.
+     * Metodo para modificar el precio. Quita el simbolo $ de los precios de
+     * todas las plantas.
      */
-    public void modificarPreu(){
-        try{
+    public void modificarPreu() {
+        try {
             xqe = con.createExpression();
-            
+
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//CATALOG/PLANT/PRICE where starts-with($b, '$')"
                     + "return update value $b with substring($b, 2)";
-            
-            
-        }catch(XQException ex){
+            xqe.executeCommand(xq);
+
+        } catch (XQException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    
+
     /**
      * Metodo para obtener todas las plantas.
-     * @return 
+     *
+     * @return
      */
     public List<Node> obtenirPlantes() {
         List<Node> plantes = new ArrayList<>();
         try {
             xqe = con.createExpression();
-            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//return $b";
+            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//PLANT return $b";
 
             XQResultSequence rs = xqe.executeQuery(xq);
             while (rs.next()) {
@@ -126,12 +72,12 @@ public class Consultes {
         }
         return plantes;
     }
-    
-    
+
     /**
      * Cercar planta per el nom comú.
+     *
      * @param nom
-     * @return 
+     * @return
      */
     public Node cercarNom(String nom) {
         Node planta = null;
@@ -148,16 +94,16 @@ public class Consultes {
         }
         return planta;
     }
-    
-    
+
     /**
      * Metodo para añadir una planta.
+     *
      * @param common
      * @param botanical
      * @param zone
      * @param light
      * @param price
-     * @param availability 
+     * @param availability
      */
     public void afegirPlanta(String common, String botanical, String zone, String light, double price, int availability) {
         try {
@@ -171,19 +117,19 @@ public class Consultes {
                     + "        <PRICE>" + price + "</PRICE>"
                     + "        <AVAILABILITY>" + availability + "</AVAILABILITY>"
                     + "    </PLANT>\n"
-                    + "following doc('/Exercici-1-M6-UF3/plantes.xml";
+                    + "preceding doc('/Exercici-1-M6-UF3/plantes.xml";
 
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
-    
+
     /**
      * Metodo para añadir un atributo a las plantas.
+     *
      * @param atributo
-     * @param valor 
+     * @param valor
      */
     public void afegirAtribut(String atributo, String valor) {
         try {
@@ -194,47 +140,63 @@ public class Consultes {
             System.out.println(ex.getMessage());
         }
     }
-    
-    
-    public void cercarPerRangPreus(double preuMinim, double preuMaxim){
-        try{
+
+    /**
+     * Metode per afegir una etiqueta.
+     *
+     * @param etiqueta
+     * @param valor
+     * @param zona
+     */
+    public void afegirEtiqueta(String etiqueta, String valor, String zona) {
+        try {
             xqe = con.createExpression();
-            String xq;
+            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT where every $a in $b/ZONE satisfies ($a='" + zona + "') return update insert <" + etiqueta.toUpperCase() + "> {'" + valor + "'} </" + etiqueta.toUpperCase() + "> into $b";
             xqe.executeCommand(xq);
-        }catch(XQException ex){
+
+        } catch (XQException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    /**
+     * Metode per a cercar per preu.
+     *
+     * @param preuMinim
+     * @param preuMaxim
+     */
+    public void cercarPerRangPreus(double preuMinim, double preuMaxim) {
+        try {
+            xqe = con.createExpression();
+            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//PLANT where every $a in $b/ZONE satisfies($a >= '" + preuMinim + "' and $a <= '" + preuMaxim + "') return $b";
+            xqe.executeCommand(xq);
+        } catch (XQException ex) {
             System.out.println(ex);
         }
     }
-    
+
     /**
      * Metode per cercar plantes per zona.
-     * @param zona 
+     *
+     * @param zona
      */
-    public void cercarPerZona(String zona){
-        try{
+    public void cercarPerZona(String zona) {
+        try {
             xqe = con.createExpression();
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//PLANT where every $a in $b/COMMON/ZONE satisfies ($a = '" + zona + "') return $b";
             xqe.executeCommand(xq);
-        }catch(XQException ex){
+        } catch (XQException ex) {
             System.out.println(ex);
         }
     }
-    
+
     /**
-     * Metode per afegir un node.
+     * Metode per modificar preu de una planta.
+     *
+     * @param nom
+     * @param preu
      */
-    public void afegirNode(){
-        try{
-            xqe = con.createExpression();
-            String xq;
-            xqe.executeCommand(xq);
-        }catch(XQException ex){
-            System.out.println(ex);
-        }
-    }
-    
-    
     public void modificarPreuPlanta(String nom, double preu) {
 
         try {
@@ -246,10 +208,11 @@ public class Consultes {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * Metode per eliminar una planta.
-     * @param nom 
+     *
+     * @param nom
      */
     public void eliminarPlanta(String nom) {
 
