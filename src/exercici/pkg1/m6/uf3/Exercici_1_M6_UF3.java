@@ -28,37 +28,37 @@ public class Exercici_1_M6_UF3 {
 
     public static void main(String[] args) {
 
-        ConfigConnexio cc = new ConfigConnexio();
-        Consultes cs = new Consultes(cc.getCon());
-
-        //Llibre
-        String codigo = "16-205";
-        String categoria = "BBDD";
-        String fecha_pub = "2017-03-19";
-        String titulo = "BBDD XML con eXist";
-        String ventas = "7";
-
-        String codigo2 = "16-041";
-        String precio = "50€";
-        String etiqueta = "preu";
-        String atributo = "disponible";
-        String valor = "S";
-        String valor1 = "0€";
-
-//        cs.afegirLlibre(codigo, categoria, fecha_pub, titulo, ventas);
-//        cs.afegirAtribut(atributo, valor);
+//        ConfigConnexio cc = new ConfigConnexio();
+//        Consultes cs = new Consultes(cc.getCon());
 //
-//        cs.afegirEtiqueta(etiqueta, valor1);
-//        cs.modificarPreuNode(codigo2, precio);
-        //LLISTAR LLIBRES
-        //imprimirLibros(cs.obtenirLlibres());
-        //CERCAR PER TITOL
-        imprimiLibro(cs.cercarNom("instant html"));
-
-//        cs.eliminarEtiqueta(etiqueta);
-//        cs.eliminarAtribut(atributo);
-        cs.eliminarLlibre(codigo);
-        imprimirLibros(cs.obtenirPlantes());
+//        //Llibre
+//        String codigo = "16-205";
+//        String categoria = "BBDD";
+//        String fecha_pub = "2017-03-19";
+//        String titulo = "BBDD XML con eXist";
+//        String ventas = "7";
+//
+//        String codigo2 = "16-041";
+//        String precio = "50€";
+//        String etiqueta = "preu";
+//        String atributo = "disponible";
+//        String valor = "S";
+//        String valor1 = "0€";
+//
+////        cs.afegirLlibre(codigo, categoria, fecha_pub, titulo, ventas);
+////        cs.afegirAtribut(atributo, valor);
+////
+////        cs.afegirEtiqueta(etiqueta, valor1);
+////        cs.modificarPreuNode(codigo2, precio);
+//        //LLISTAR LLIBRES
+//        //imprimirLibros(cs.obtenirLlibres());
+//        //CERCAR PER TITOL
+//        imprimiLibro(cs.cercarNom("instant html"));
+//
+////        cs.eliminarEtiqueta(etiqueta);
+////        cs.eliminarAtribut(atributo);
+//        cs.eliminarLlibre(codigo);
+//        imprimirLibros(cs.obtenirPlantes());
 
     }
 
