@@ -17,7 +17,6 @@ public class Coleccions {
 
     public Coleccions() {
         this.coleccio = conf.conexion();
-//        buscarCollectionManagement(); 
     }
 
     /**
@@ -25,6 +24,7 @@ public class Coleccions {
      */
     public void nomColeccioActual() {
         try {
+            //Recuperem el nom de la col·lecció.
             System.out.println("Col·lecció actual: " + coleccio.getName());
         } catch (XMLDBException ex) {
             Logger.getLogger(Coleccions.class.getName()).log(Level.SEVERE, null, ex);
@@ -36,6 +36,7 @@ public class Coleccions {
      */
     public void nomColeccioPare() {
         try {
+            //Recuperem la col·lecció pare i el seu nom.
             System.out.println("Col·lecció Pare: " + coleccio.getParentCollection().getName());
         } catch (XMLDBException ex) {
             Logger.getLogger(Coleccions.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,9 +46,11 @@ public class Coleccions {
     /**
      * Tornar noms de col·leccions filles.
      */
-    private void nomColeccionsFilles(){
+    public void nomColeccionsFilles(){
+        //S'inicialitza l'array.
         String [] col = null;
         try{
+            //Omplim l'array amb els noms de les col·leccions filles.
             col = coleccio.listChildCollections();
         }catch(XMLDBException ex){
             Logger.getLogger(Coleccions.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,6 +63,7 @@ public class Coleccions {
      */
     public void crearColeccio(String nom){
         try{
+            //Es crea la col·lecció amb el nom que han passat per parametre..
             cms.createCollection(nom);
         }catch(XMLDBException ex){
             Logger.getLogger(Coleccions.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,6 +76,7 @@ public class Coleccions {
      */
     public void eliminarColeccio(String nom){
         try{
+            //Eliminem la col·lecció utilitzant el nom que han pasat per parametre.
             cms.removeCollection(nom);
         }catch(XMLDBException ex){
             Logger.getLogger(Coleccions.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,6 +90,7 @@ public class Coleccions {
      * @throws XMLDBException 
      */
     public void comprovarRecursColeccio(String col, String id) throws XMLDBException{
+        //Comprovem que no s'ha introduit el nom de la col·lecció malament(No han posat res).
         if(col.length() > 0) {
             coleccio = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/" + col, "admin", "");
         }
