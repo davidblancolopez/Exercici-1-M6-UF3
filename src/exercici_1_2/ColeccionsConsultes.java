@@ -204,7 +204,7 @@ public class ColeccionsConsultes {
     }
     
     /**
-     * Metode per afegir 
+     * Metode per afegir un fitxer a la BBDD.
      * @param ruta
      * @throws XMLDBException 
      */

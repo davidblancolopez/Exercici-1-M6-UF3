@@ -24,8 +24,14 @@ public class Consultes {
      */
     public void traduirElement(String[] abans, String[] despres) {
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
-            for (int i = 0; i < 10; i++) {
+            
+            //Utilizamos un bucle para recorrer todos los elementos a traducir.
+            for (int i = 0; i < abans.length; i++) {
+                /*Creamos la sentencia inidicandole que debe renombrar el nombre que tenia antes (array abans[])
+                per el nou nom (despres[]).*/
                 String xq = "update rename doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT/" + abans[i] + "as'" + despres[i] + "'";
                 xqe.executeCommand(xq);
             }
@@ -40,11 +46,18 @@ public class Consultes {
      */
     public void modificarPreu() {
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
 
+            /*Creamos la sentencia indicandole que recorra todas las plantas y compruebe
+            que en la etiqueta PRICE el precio comience por el simbolo $ y entonces 
+            actualice el valor sin el $*/
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//CATALOG/PLANT/PRICE where starts-with($b, '$')"
                     + "return update value $b with substring($b, 2)";
+            
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
 
         } catch (XQException ex) {
@@ -58,12 +71,21 @@ public class Consultes {
      * @return
      */
     public List<Node> obtenirPlantes() {
+        
+        //Creamos una lista para almacenar las plantas.
         List<Node> plantes = new ArrayList<>();
         try {
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
+            
+            /*Creamos la sentencia indicandole que recorra todo el archivo y nos
+            retorne las plantas. */
             String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//PLANT return $b";
 
+            //Ejecutamos la sentencia.
             XQResultSequence rs = xqe.executeQuery(xq);
+            
+            //Bucle que insertara los resultados en la lista que hemos creado para guardarlos.
             while (rs.next()) {
                 plantes.add(rs.getItem().getNode());
             }
@@ -80,14 +102,26 @@ public class Consultes {
      * @return
      */
     public Node cercarNom(String nom) {
+        //Es crea un Node.
         Node planta = null;
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
+            
+            /*Creamos la sentencia indicandole que recorra todo el archivo y compruebe que en la 
+            etiqueta COMMON el nombre que hay coincide con el que se busca.*/
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//PLANT where every $a in $b/COMMON satisfies ($a = '" + nom + "') return $b";
 
+            
+            //Ejecutamos la sentencia.
             XQResultSequence rs = xqe.executeQuery(xq);
+            
+            
             rs.next();
+            
+            //Asiganmos al Node el que nos ha devuelto la consulta.
             planta = rs.getItem().getNode();
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
@@ -107,7 +141,12 @@ public class Consultes {
      */
     public void afegirPlanta(String common, String botanical, String zone, String light, double price, int availability) {
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
+            
+            /*Creamos la sentencia indicandole que cree una nueva planta con los datos indicados, que
+            seran los que le llega por parametro al metodo.*/
             String xq = "update insert "
                     + "    <PLANT>"
                     + "        <COMMON>" + common + "</COMMON>"
@@ -119,6 +158,7 @@ public class Consultes {
                     + "    </PLANT>\n"
                     + "preceding doc('/Exercici-1-M6-UF3/plantes.xml";
 
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
@@ -133,8 +173,15 @@ public class Consultes {
      */
     public void afegirAtribut(String atributo, String valor) {
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
+            
+            /*Creamos la sentencia indicandole que inserte un nuevo atributo con el nombre y valor indicados
+            por parametros.*/ 
             String xq = "update insert attribute " + atributo + " {'" + valor + "'} into doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT";
+            
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
@@ -150,8 +197,14 @@ public class Consultes {
      */
     public void afegirEtiqueta(String etiqueta, String valor, String zona) {
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
-            String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT where every $a in $b/ZONE satisfies ($a='" + zona + "') return update insert <" + etiqueta.toUpperCase() + "> {'" + valor + "'} </" + etiqueta.toUpperCase() + "> into $b";
+            
+            /*Creamos la sentencia indicandole que inserte la etiqueta con el valor indicado.*/
+            String xq = "update insert <" + etiqueta + ">'" + valor + "'</" + etiqueta + "> into doc('/Exercici-1-M6-UF3/plantes.xml')//libro";
+            
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
 
         } catch (XQException ex) {
@@ -167,8 +220,15 @@ public class Consultes {
      */
     public void cercarPerRangPreus(double preuMinim, double preuMaxim) {
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
-            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//PLANT where every $a in $b/ZONE satisfies($a >= '" + preuMinim + "' and $a <= '" + preuMaxim + "') return $b";
+            
+            /*Creamos la sentencia indicandole que recorra todo el archivo y en PRICE
+            si coincide el precio entre el rango indicado lo devuelve.*/
+            String xq = "for $b in doc ('/Exercici-1-M6-UF3/plantes.xml')//PLANT where every $a in $b/PRICE satisfies($a >= '" + preuMinim + "' and $a <= '" + preuMaxim + "') return $b";
+            
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex);
@@ -182,9 +242,16 @@ public class Consultes {
      */
     public void cercarPerZona(String zona) {
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
+            
+            /*Creamos la sentencia indicandole que recorra todo el archivo y en ZONE
+            si coincide con la zona indicada lo devuelve*/
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//PLANT where every $a in $b/COMMON/ZONE satisfies ($a = '" + zona + "') return $b";
+            
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex);
@@ -200,10 +267,19 @@ public class Consultes {
     public void modificarPreuPlanta(String nom, double preu) {
 
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
+            
+            /*Creamos la sentencia indicandole que recorra todo el archivo y en COMMON
+            si coincide con el nombre que le hemos pasado entonces se actualiza el precio.*/
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
-                    + "//PLANT where every $a in $b/COMMON satisfies ($a = '" + nom + "') ";
+                    + "//PLANT where every $a in $b/COMMON satisfies ($a = '" + nom + "') "
+                    + "return update value $b/PRICE with substring(" + preu + ")";
+            
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
+            
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
         }
