@@ -275,7 +275,7 @@ public class Consultes {
             si coincide con el nombre que le hemos pasado entonces se actualiza el precio.*/
             String xq = "for $b in doc('/Exercici-1-M6-UF3/plantes.xml')"
                     + "//PLANT where every $a in $b/COMMON satisfies ($a = '" + nom + "') "
-                    + "return update value $b/PRICE with substring(" + preu + ")";
+                    + "return update value $b/PRICE with " + preu ;
             
             //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
@@ -293,8 +293,15 @@ public class Consultes {
     public void eliminarPlanta(String nom) {
 
         try {
+            
+            //Se inicializa la expresion xq.
             xqe = con.createExpression();
+            
+            /*Creamos la sentencia indicandole que borre el elemento que coincida el nombre
+            en COMMON con el indicado por parametro.*/
             String xq = "update delete doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT//COMMON = " + nom + "']";
+            
+            //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
         } catch (XQException ex) {
             System.out.println(ex.getMessage());
