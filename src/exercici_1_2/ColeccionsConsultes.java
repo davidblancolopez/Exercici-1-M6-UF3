@@ -140,17 +140,17 @@ public class ColeccionsConsultes {
     
     /**
      * Metode per afegir un recurs a la BBDD.
-     * @param args
+     * @param fitxer
      * @throws XMLDBException
      * @throws SAXException
      * @throws IOException
      * @throws ParserConfigurationException 
      */
-    public void afegirRecurs(String args) throws XMLDBException, SAXException, IOException, ParserConfigurationException {
+    public void afegirRecurs(String fitxer) throws XMLDBException, SAXException, IOException, ParserConfigurationException {
         XMLResource xml = null;
-        File arxiu = new File(args);
+        File arxiu = new File(fitxer);
 
-        xml = (XMLResource) coleccio.createResource(args, XMLResource.RESOURCE_TYPE);
+        xml = (XMLResource) coleccio.createResource(fitxer, XMLResource.RESOURCE_TYPE);
         Document document = cargarXML(arxiu);
         xml.setContentAsDOM(document);
         coleccio.storeResource(xml);
@@ -203,6 +203,11 @@ public class ColeccionsConsultes {
         }
     }
     
+    /**
+     * Metode per afegir 
+     * @param ruta
+     * @throws XMLDBException 
+     */
     public void afegir(String ruta) throws XMLDBException{
         BinaryResource br = null;
         br = (BinaryResource) coleccio.createResource(ruta, BinaryResource.RESOURCE_TYPE);
@@ -212,12 +217,17 @@ public class ColeccionsConsultes {
         coleccio.storeResource(br);
     }
     
+    /**
+     * Metode per descarregar un fitxer.
+     * @param ruta
+     * @throws XMLDBException
+     * @throws IOException 
+     */
     public void descarregar(String ruta) throws XMLDBException, IOException{
 
         BinaryResource br = (BinaryResource) coleccio.getResource(ruta);
         byte[] lista = (byte[]) br.getContent();
         Path p = Paths.get(ruta);
-//        File imatge = new File(ruta);
         
         Files.write(p, lista);
         coleccio.storeResource(br);
