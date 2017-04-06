@@ -206,9 +206,10 @@ public class ColeccionsConsultes {
      */
     public void eliminarRecurs(String recurs){
         
-       //Inicializamos el objeto XML utilizando el metodo anterior que sirve para obtener un recurso.
+       //Inicializamos el objeto XML utilizando el metodo anterior que sirve para obtener un recurso con el nombre pasado por parametro.
        XMLResource xml = obtenirRecurs(recurs);
         try{
+            //Eliminamos el recurso que hemos obtenido antes y hemos metido en xml.
             coleccio.removeResource(xml);
         }catch(XMLDBException ex){
             Logger.getLogger(ColeccionsConsultes.class.getName()).log(Level.SEVERE, null, ex);
@@ -221,9 +222,18 @@ public class ColeccionsConsultes {
      * @throws XMLDBException 
      */
     public void afegir(String ruta) throws XMLDBException{
+        
+        
         BinaryResource br = null;
+        
+        //Inicializamos el objeto BinaryResource utilizando este metodo al que se le pasa la ruta pasada por parametro 
+        // y se utiliza el metodo RESOURCE_TYPE.
         br = (BinaryResource) coleccio.createResource(ruta, BinaryResource.RESOURCE_TYPE);
+        
+        //Creamos un archivo FIle con la ruta de la imagen especificada.
         File imatge = new File(ruta);
+        
+        //Le metemos el objeto File al objeto BinaryResource.
         br.setContent(imatge);
         
         coleccio.storeResource(br);
@@ -237,11 +247,20 @@ public class ColeccionsConsultes {
      */
     public void descarregar(String ruta) throws XMLDBException, IOException{
 
+        //Inicializamos el objeto Binary Resource con este metodo que obtiene el recurso
+        //con el nombre pasado por parametro.
         BinaryResource br = (BinaryResource) coleccio.getResource(ruta);
+        
+        //Creamos un array de byte y introducimos el recurso binario con este metodo.
         byte[] lista = (byte[]) br.getContent();
+        
+        //Creamos un Path con la ruta pasada por parametro.
         Path p = Paths.get(ruta);
         
+        //
         Files.write(p, lista);
+        
+        //Guardamos el recurso.
         coleccio.storeResource(br);
     }
     
