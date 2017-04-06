@@ -14,6 +14,7 @@ public class Consultes {
     private final XQConnection con;
     private XQExpression xqe;
 
+
     public Consultes(XQConnection con) {
         this.con = con;
     }
