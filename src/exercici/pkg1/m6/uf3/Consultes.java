@@ -13,7 +13,6 @@ public class Consultes {
 
     private final XQConnection con;
     private XQExpression xqe;
-    private XQPreparedExpression xqpe;
 
     public Consultes(XQConnection con) {
         this.con = con;
