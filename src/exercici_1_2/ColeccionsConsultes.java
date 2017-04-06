@@ -29,6 +29,7 @@ public class ColeccionsConsultes {
     CollectionManagementService cms;
 
     public ColeccionsConsultes() {
+        //Inicializamos la coleccion.
         this.coleccio = conf.conexion();
         buscarCollectionManagement();
     }
@@ -38,7 +39,7 @@ public class ColeccionsConsultes {
      */
     public void nomColeccioActual() {
         try {
-            //Recuperem el nom de la col·lecció.
+            //Recuperamos el nombre la coleccion con este metodo.
             System.out.println("Col·lecció actual: " + coleccio.getName());
         } catch (XMLDBException ex) {
             Logger.getLogger(ColeccionsConsultes.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,7 +51,7 @@ public class ColeccionsConsultes {
      */
     public void nomColeccioPare() {
         try {
-            //Recuperem la col·lecció pare i el seu nom.
+            //Recuperamos la colecion padre y miramos su nombre.
             System.out.println("Col·lecció Pare: " + coleccio.getParentCollection().getName());
         } catch (XMLDBException ex) {
             Logger.getLogger(ColeccionsConsultes.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,10 +62,10 @@ public class ColeccionsConsultes {
      * Tornar noms de col·leccions filles.
      */
     public void nomColeccionsFilles() {
-        //S'inicialitza l'array.
+        //Inicializamos el array.
         String[] col = null;
         try {
-            //Omplim l'array amb els noms de les col·leccions filles.
+            //Rellenamos el array con el nombre de las colecciones hijas.
             col = coleccio.listChildCollections();
         } catch (XMLDBException ex) {
             Logger.getLogger(ColeccionsConsultes.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,7 +93,8 @@ public class ColeccionsConsultes {
      */
     public void eliminarColeccio(String nom) {
         try {
-            //Eliminem la col·lecció utilitzant el nom que han pasat per parametre.
+
+            //Eliminamos la coleccion utilizando el nombre pasado por parametro.
             cms.removeCollection(nom);
         } catch (XMLDBException ex) {
             Logger.getLogger(ColeccionsConsultes.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,8 +109,9 @@ public class ColeccionsConsultes {
      * @throws XMLDBException
      */
     public void comprovarRecursColeccio(String col, String id) throws XMLDBException {
-        //Comprovem que no s'ha introduit el nom de la col·lecció malament(No han posat res).
+        //Comprovamos que no se ha introducido mal el nombre.
         if (col.length() > 0) {
+            //Asignamos a coleccio la coleccion que buscamos con el nombre.
             coleccio = DatabaseManager.getCollection("xmldb:exist://localhost:8080/exist/xmlrpc/db/" + col, "admin", "");
         }
 
@@ -120,6 +123,7 @@ public class ColeccionsConsultes {
      */
     public void buscarCollectionManagement() {
         try {
+            //Obtenemos el servicio.
             serveis = coleccio.getServices();
             for (Service servei : serveis) {
                 if (servei.getName().equals("CollectionManagementService")) {
@@ -150,9 +154,14 @@ public class ColeccionsConsultes {
         XMLResource xml = null;
         File arxiu = new File(fitxer);
 
+        //Inicializamos el objeto xml y le metemos el recurso que creamos.
         xml = (XMLResource) coleccio.createResource(fitxer, XMLResource.RESOURCE_TYPE);
+        //Creamos un objeto document y utlizamos el metodo cargarXML para obtener el contenido y meterlo en el objeto document.
         Document document = cargarXML(arxiu);
+        
+        //Introducimos el objeto document en el XML con este metodo.
         xml.setContentAsDOM(document);
+        //Añadimos el recurso a la coleccion.
         coleccio.storeResource(xml);
 
     }
@@ -182,6 +191,7 @@ public class ColeccionsConsultes {
         XMLResource xml = null;
 
         try {
+            //Obtenemos el recurso utilizando el nombre pasado por parametro.
             xml = (XMLResource) coleccio.getResource(recurs);
         } catch (XMLDBException ex) {
             Logger.getLogger(ColeccionsConsultes.class.getName()).log(Level.SEVERE, null, ex);
@@ -195,6 +205,8 @@ public class ColeccionsConsultes {
      * @param recurs 
      */
     public void eliminarRecurs(String recurs){
+        
+       //Inicializamos el objeto XML utilizando el metodo anterior que sirve para obtener un recurso.
        XMLResource xml = obtenirRecurs(recurs);
         try{
             coleccio.removeResource(xml);
