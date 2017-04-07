@@ -202,7 +202,7 @@ public class Consultes {
             xqe = con.createExpression();
             
             /*Creamos la sentencia indicandole que inserte la etiqueta con el valor indicado.*/
-            String xq = "update insert <" + etiqueta + ">'" + valor + "'</" + etiqueta + "> into doc('/Exercici-1-M6-UF3/plantes.xml')//libro";
+            String xq = "update insert <" + etiqueta + ">'" + valor + "'</" + etiqueta + "> into doc('/Exercici-1-M6-UF3/plantes.xml')//PLANT";
             
             //Ejecutamos la sentencia.
             xqe.executeCommand(xq);
